@@ -1,0 +1,11 @@
+.markdown-wrapper {
+    display:flex;
+    justify-content:flex-start;
+    height:calc(100vh - 50px);
+    align-items: center;
+}
+
+.markdown-wrapper pre {
+    width:100%;
+    font-size:1.5rem;
+}

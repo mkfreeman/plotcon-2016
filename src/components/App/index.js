@@ -1,5 +1,6 @@
 import React from 'react';
-import SlideShowWrapper from './containers/SlideShowWrapper.jsx';
+import SlideShowWrapper from '../../containers/SlideShowWrapper';
+import './main.css';
 
 // App
 var App = React.createClass({

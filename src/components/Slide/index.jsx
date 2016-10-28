@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Title from '../Title';
+import Statement from '../Statement';
 import Bubbles from '../Bubbles';
 import Markdown from '../Markdown';
+import Site from '../Site';
 import Network from '../Network';
 import * as d3 from 'd3';
+import './main.css';
 
 // List of bullet points, and previous / next buttons
 var Slide = React.createClass({
@@ -24,27 +27,34 @@ var Slide = React.createClass({
     },
     render() {
         var currentData = this.props.data[this.props.shown];
+        console.log('current Data ', this.props.data[this.props.shown])
 
         // Figure out what to show
         switch(this.props.type) {
             case 'markdown':
                 var component = <Markdown text={this.props.markdown}></Markdown>
                 break;
-            case 'iframe':
-                var component = <iFrame src={this.props.iframe} width={window.innerWidth} height={window.innerHeight}/>
+            case 'site':
+                var component = <Site twitterLink={this.props.twitterLink} url={this.props.iframe} width={window.innerWidth * .9} height={window.innerHeight - 60}/>
                 break;
             case 'title':
                 var component = <Title title = {this.props.header} subtitle={this.props.subtitle}/>
                 break;
+            case 'statement':
+                var component = <Statement text = {this.props.text}/>
+                break;
             case 'network':
-                var component = <Network data={currentData} duration={1500} width={window.innerWidth} height={window.innerHeight}/>
+                var component = <Network data={currentData} duration={1500} width={window.innerWidth} height={window.innerHeight }/>
                 break;
             case 'bubbles':
                 var component = <Bubbles
-                                    duration={4000}
+                                    duration={this.props.duration}
                                     data={currentData}
                                     width={window.innerWidth}
-                                    ease={d3.easeBounceOut}
+                                    ease={this.props.ease}
+                                    cx={this.props.cx}
+                                    cy={this.props.cy}
+                                    delay={this.props.delay}
                                     height={window.innerHeight - 10} />
                 break;
             default:
@@ -53,6 +63,9 @@ var Slide = React.createClass({
         return(
             <div onKeyDown={this.handleKeyPress}>
                 {component}
+                {this.props.footerText &&
+                   <footer><div>{this.props.footerText}</div></footer>
+                }
             </div>
         );
     }

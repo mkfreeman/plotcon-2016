@@ -1,7 +1,7 @@
 // Network diagram
 // Largely derived from: http://stackoverflow.com/questions/38310768/d3-js-v4-wacky-link-transition-in-collapsible-tree-example
 import React from 'react';
-import './main.css'
+import './main.css';
 import * as d3 from 'd3';
 
 // Bubbles

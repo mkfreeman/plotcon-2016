@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './main.css';
 // List of bullet points, and previous / next buttons
 var Title = React.createClass({
     render() {

@@ -17,30 +17,41 @@ var Bubbles = React.createClass({
 
     // Update on new props
     componentWillReceiveProps (props){
+        console.log('bubble props ', props)
         this.props = props;
         this.update();
     },
     // Bind data using D3
     update() {
         var ease = this.props.ease;
-        // Data join, returns updating elements
 
+        // Set scales
+        // var xMin = d3.min(this.props.data, (d) => d.x)
+        // var xMax = d3.max(this.props.data, (d) => d.x)
+        // var xScale = d3.scaleLinear().domain([xMin, xMax]).range([0, this.props.width])
+        //
+        // var yMin = d3.min(this.props.data, (d) => d.y)
+        // var yMax = d3.max(this.props.data, (d) => d.y)
+        // var yScale = d3.scaleLinear().domain([yMin, yMax]).range([this.props.height, 0])
+        //
+        // Data join, returns updating elements
         var bubbles = this.g.selectAll('.bubble').data(this.props.data);
         // Entering element, merged with updating elements
+        console.log('delay ' , this.props.delay, this.props.ease)
         bubbles.enter().append("circle")
                     .attr('class', 'bubble')
                     .attr('fill', '#26a69a')
-                    .attr("cx", (d,i) => i * 20)
-                    .attr("cy", (d, i) => d)
-                    .attr('r', 5)
+                    .attr("cx", this.props.cx)
+                    .attr("cy", this.props.cy)
+                    .attr('r', 0)
                     // Merge in updating elements
                     .merge(bubbles)
                     .transition()
-                    .delay((d,i) => {return Math.random() * 10 * this.props.duration / this.props.data.length})
+                    .delay(this.props.delay)
                     .duration(this.props.duration)
-                    .ease(ease)
-                    .attr("cx", (d,i) => i * 20)
-                    .attr("cy", (d, i) => d)
+                    .ease(this.props.ease)
+                    .attr("cx", this.props.cx)
+                    .attr("cy", this.props.cy)
                     .attr('r', 5)
 
         bubbles.exit().remove();

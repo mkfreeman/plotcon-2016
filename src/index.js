@@ -3,8 +3,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider} from 'react-redux'
 import {createStore} from 'redux';
-import App from './App.js';
-import reducers from './reducers/Reducer.jsx';
+import App from './components/App';
+import reducers from './reducers/Reducer';
 
 // Create object store of reducer states
 let store = createStore(reducers);

@@ -1,0 +1,16 @@
+@import url("https://fonts.google.com/?selection.family=Roboto:300,400,500");
+@import url("https://fonts.googleapis.com/css?family=Lato:300,300i|Raleway:100,300");
+footer {
+    position:fixed;
+    height:50px;
+    width:100%;
+    border-top:1px solid green;
+    bottom:0px;
+    font-family:"Lato", "Raleway";
+}
+
+footer div {
+    padding-top:10px;
+    padding-left:10px;
+    font-size:1.5rem;
+}

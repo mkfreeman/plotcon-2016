@@ -3,6 +3,26 @@ import React from 'react';
 import {combineReducers, createStore} from "redux";
 import * as d3 from 'd3';
 
+var networkCode = '{\n\
+    name:"Concept",\n\
+    children:[\n\
+        {\n\
+            name:"Idea 1",\n\
+            children:[\n\
+                {name:"Data Structure 1"},\n\
+                {name:"Data Structure 2"}\n\
+            ]\n\
+        },\n\
+        {\n\
+            name:"Idea 2",\n\
+            children:[\n\
+                {name:"Data Structure 1"},\n\
+                {name:"Data Structure 2"}\n\
+            ]\n\
+        }\n\
+    ]\n\
+};\n\
+'
 var bounceCode = '\
     var x = "1";\n\
     var b1 = 4 / 11,\n\
@@ -24,14 +44,8 @@ var bubbles1 = d3.range(1, 100).map(function(d) {
 });
 
 var bubbles2 = d3.range(1, 100).map(function(d) {
-    return 500;
+    return window.innerHeight - 55;
 });
-
-var bubblesData = [
-    {bubbleData:bubbles1},
-    {bubbleData:bubbles2},
-];
-
 
 
 var networkData0  = {
@@ -65,13 +79,53 @@ var networkData2 = {
         }
     ]
 };
+
+var bubbleData = {
+    data:[
+        bubbles1,
+        bubbles2,
+    ],
+    duration:5000,
+    delay:(d,i) => {return Math.random() * 100 * 5000 / 500},
+    ease:d3.easeBounce,
+    cx:(d,i) => i * 20,
+    cy:(d, i) => d
+}
+
+var circles = d3.range(0, 100).map((d,i) => window.innerWidth / 2)
+var circles2 = d3.range(0, 100).map(function(d){
+    // var center = window.innerWidth / 2
+    var margin = 50
+    var value = d % 2 == 1 ? margin : window.innerWidth - margin;
+    return value
+})
+var bubbleData2 = {
+    data:[
+        [],
+        circles,
+        circles2,
+    ],
+    duration:500,
+    delay:(d,i) => {return i * 100},
+    ease:d3.easeLinear,
+    cx:(d) => d,
+    cy:(d,i) => i * 20
+}
 var slideShowState = {
     slides:[
-        // {type:'title', data:[], shown:0, header:'Title', subtitle:'@mf_viz'},
-        {type:'network', data:[networkData0, networkData1, networkData2], shown:0},
-        {type:'bubbles', data:bubblesData, shown:0, header:'Bubbles'},
-        {type:'markdown', data:[], shown:0, markdown:bounceCode},
-        {type:'iframe', data: [], shown:0, header:'Slide 3', iframe:"http://mfviz.com/central-limit/"}
+        {type:'title', data:[], shown:0, header:'Visualizing Concepts with D3.js', subtitle:'@mf_viz'},
+        {type:'statement', data:[], shown:0, text:'What is division?'},
+        {type:'bubbles', footerText:"What is Division?", ease:bubbleData2.ease, data:bubbleData2.data, shown:0, header:'Bubbles',
+            cx:bubbleData2.cx, cy:bubbleData2.cy, delay:bubbleData2.delay, duration:bubbleData2.duration},
+        {type:'statement', data:[], shown:0, text:'In order to visualize concepts, we need to identify an underlying data structure (and/or) algorithm'},
+        {type:'network', footerText:'Mapping from Concepts to Data', data:[networkData0, networkData1, networkData2], shown:0},
+        {type:'markdown', footerText:'Mapping from Concepts to Data: Data', data:[], shown:0, markdown:networkCode},
+        {type:'bubbles', footerText:'Bouncing', ease:bubbleData.ease, data:bubbleData.data, shown:0, header:'Bubbles',
+            cx:bubbleData.cx, cy:bubbleData.cy, delay:bubbleData.delay, duration:bubbleData.duration},
+        {type:'markdown', footerText:'Bouncing: Algorithm', data:[], shown:0, markdown:bounceCode},
+        {type:'site', footerText:'Central Limit Theorem', data: [], shown:0, header:'Slide 3', iframe:"http://mfviz.com/central-limit/"},
+        {type:'site', footerText:'The Racial Divide', twitterLink:{handle:'@vlandingham', url:'https://twitter.com/vlandham'},data: [], shown:0, header:'Slide 3', iframe:"http://vallandingham.me/racial_divide/"},
+        {type:'title', data:[], shown:0, header:'Thanks!', subtitle:'@mf_viz'},
     ],
     currentSlide:0,
     getCurrentSlide:function() {
@@ -90,7 +144,7 @@ var slideShowReducer = function(state = slideShowState, action) {
         case 'NEXT_POINT':
             var slides = state.slides;
             // Go to next slide (test if all points already done AND not on last slide
-            if(slides[state.currentSlide].shown == slides[state.currentSlide].data.length && state.currentSlide < state.slides.length -1 ) {
+            if(slides[state.currentSlide].shown >= slides[state.currentSlide].data.length -1 && state.currentSlide < state.slides.length -1 ) {
                 return {...state, currentSlide: state.currentSlide + 1};
             } else if(slides[state.currentSlide].shown < slides[state.currentSlide].data.length){
                 slides[state.currentSlide].shown += 1;
