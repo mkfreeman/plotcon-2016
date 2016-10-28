@@ -27,6 +27,9 @@ var Slide = React.createClass({
     },
     render() {
         var currentData = this.props.data[this.props.shown];
+        if(this.props.fills) {
+            var currentFill = this.props.fills[this.props.shown];
+        }
         console.log('current Data ', this.props.data[this.props.shown])
 
         // Figure out what to show
@@ -54,6 +57,8 @@ var Slide = React.createClass({
                                     ease={this.props.ease}
                                     cx={this.props.cx}
                                     cy={this.props.cy}
+                                    r={this.props.r}
+                                    fill={currentFill}
                                     delay={this.props.delay}
                                     height={window.innerHeight - 10} />
                 break;

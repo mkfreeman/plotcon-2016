@@ -37,22 +37,23 @@ var Bubbles = React.createClass({
         // Data join, returns updating elements
         var bubbles = this.g.selectAll('.bubble').data(this.props.data);
         // Entering element, merged with updating elements
-        console.log('delay ' , this.props.delay, this.props.ease)
+        console.log('fill ' , this.props.fill)
         bubbles.enter().append("circle")
                     .attr('class', 'bubble')
-                    .attr('fill', '#26a69a')
+                    .attr('fill', this.props.fill)
                     .attr("cx", this.props.cx)
                     .attr("cy", this.props.cy)
                     .attr('r', 0)
                     // Merge in updating elements
                     .merge(bubbles)
                     .transition()
+                    .attr('fill', this.props.fill)
                     .delay(this.props.delay)
                     .duration(this.props.duration)
                     .ease(this.props.ease)
                     .attr("cx", this.props.cx)
                     .attr("cy", this.props.cy)
-                    .attr('r', 5)
+                    .attr('r', this.props.r)
 
         bubbles.exit().remove();
     },
