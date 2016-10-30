@@ -2,7 +2,7 @@
 import React from 'react';
 import {combineReducers, createStore} from "redux";
 import * as d3 from 'd3';
-import SlideData from '../data';
+import SlideData from '../data/slides';
 
 var slideShowState = {
     slides:Object.keys(SlideData).map((d) => SlideData[d]),

@@ -6,6 +6,7 @@ import Bubbles from '../Bubbles';
 import Markdown from '../Markdown';
 import Site from '../Site';
 import Network from '../Network';
+import Image from '../Image';
 import * as d3 from 'd3';
 import './main.css';
 
@@ -39,6 +40,9 @@ var Slide = React.createClass({
                 break;
             case 'site':
                 var component = <Site twitterLink={this.props.twitterLink} url={this.props.iframe} width={window.innerWidth * .9} height={window.innerHeight - 60}/>
+                break;
+            case 'image':
+                var component = <Image src={this.props.src} width={window.innerWidth * .9} height={window.innerHeight - 60}/>
                 break;
             case 'title':
                 var component = <Title title = {this.props.header} subtitle={this.props.subtitle}/>

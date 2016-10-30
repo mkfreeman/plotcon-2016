@@ -18,7 +18,7 @@ var fills = ['#26a69a', '#26a69a', (d,i) => i % 2 == 1 ? '#26a69a' : 'rgb(215, 8
 
 var duration = 500;
 var delay = (d,i) => {return i * 100};
-var ease = d3.easeLinear;
+var ease = d3.easeCubic;
 var r = 12;
 var cx = (d) => d;
 var cy = (d,i) => 15 + i * (window.innerHeight - 70)/20;
