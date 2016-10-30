@@ -5,7 +5,7 @@ var bubbles1 = d3.range(1, 100).map(function(d) {
 });
 
 var bubbles2 = d3.range(1, 100).map(function(d) {
-    return window.innerHeight - 55;
+    return window.innerHeight - 57;
 });
 
 var data = [

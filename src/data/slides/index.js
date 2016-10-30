@@ -14,6 +14,7 @@ import Slide12 from './Slide12.js';
 import Slide13 from './Slide13.js';
 import Slide14 from './Slide14.js';
 import Slide15 from './Slide15.js';
+import Slide16 from './Slide16.js';
 
 var slideData = {};
 slideData.slide1 = Slide1;
@@ -30,7 +31,9 @@ slideData.slide11 = Slide10;
 slideData.slide12 = Slide13;
 slideData.slide13 = Slide14;
 slideData.slide14 = Slide15;
-slideData.slide15 = Slide12;
+slideData.slide15 = Slide16;
+slideData.slide16 = Slide12;
+
 
 
 export default slideData;

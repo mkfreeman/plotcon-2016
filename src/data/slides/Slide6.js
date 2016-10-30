@@ -2,22 +2,25 @@ var networkCode = '{\n\
     name:"Concept",\n\
     children:[\n\
         {\n\
-            name:"Idea 1",\n\
+            name:"Idea",\n\
             children:[\n\
-                {name:"Data Structure 1"},\n\
-                {name:"Data Structure 2"}\n\
+                {name:"Data", children:[\n\
+                    {name:"Algorithm"},\n\
+                    {name:"Algorithm"}\n\
+                ]}\n\
             ]\n\
         },\n\
         {\n\
-            name:"Idea 2",\n\
+            name:"Idea",\n\
             children:[\n\
-                {name:"Data Structure 1"},\n\
-                {name:"Data Structure 2"}\n\
+                {name:"Data"},\n\
+                {name:"Data"}\n\
             ]\n\
         }\n\
     ]\n\
 };\n\
 ';
+
 
 var Slide6 = {type:'markdown',
               footerText:'Mapping from Concepts to Data: Data',

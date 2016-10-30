@@ -5,6 +5,7 @@ import Statement from '../Statement';
 import Bubbles from '../Bubbles';
 import Markdown from '../Markdown';
 import Site from '../Site';
+import Resources from '../Resources';
 import Network from '../Network';
 import Image from '../Image';
 import * as d3 from 'd3';
@@ -39,7 +40,7 @@ var Slide = React.createClass({
                 var component = <Markdown text={this.props.markdown}></Markdown>
                 break;
             case 'site':
-                var component = <Site twitterLink={this.props.twitterLink} url={this.props.iframe} width={window.innerWidth * .9} height={window.innerHeight - 60}/>
+                var component = <Site twitterLink={this.props.srcLink} url={this.props.iframe} width={window.innerWidth * .9} height={window.innerHeight - 60}/>
                 break;
             case 'image':
                 var component = <Image src={this.props.src} width={window.innerWidth * .9} height={window.innerHeight - 60}/>
@@ -52,6 +53,10 @@ var Slide = React.createClass({
                 break;
             case 'network':
                 var component = <Network data={currentData} duration={1500} width={window.innerWidth} height={window.innerHeight }/>
+                break;
+            case 'resources':
+                console.log('resources!')
+                var component = <Resources data={currentData} title={this.props.title}/>
                 break;
             case 'bubbles':
                 var component = <Bubbles
@@ -75,6 +80,9 @@ var Slide = React.createClass({
                 {this.props.footerText &&
                    <footer><div>{this.props.footerText}</div></footer>
                 }
+                {this.props.srcLink && (
+                    <a className = 'srcLink' target="_blank" href={this.props.srcLink.url}>{this.props.srcLink.text}</a>
+                )}
             </div>
         );
     }
