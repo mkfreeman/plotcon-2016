@@ -9,26 +9,28 @@ var Network = React.createClass({
     // Setup on mount
     componentDidMount () {
         this.setUp();
-        console.log(this.props.data)
-        this.prepData()
+        this.update();
     },
 
     // Bind initial g element, compute data structure
     setUp () {
         this.g = d3.select(this.root).append("g")
                     .attr("transform", "translate(0,30)");
-    },
-    prepData(){
-        this.root = d3.hierarchy(this.props.data);
+
+        // Get tree root using hierarchy
+        this.root = d3.hierarchy(this.props.data.network);
+
+        //Assigning numerical Ids
         var i = 0;
         this.root.each(function(d) {
-            d.id = d.data.name + i; //Assigning numerical Ids
+            d.id = d.data.name + i;
             i ++;
         });
 
         this.root.x0 = this.props.height / 2;
         this.root.y0 = 0;
 
+        // Function to collapse tree
         function collapse(d) {
             if (d.children) {
                 d._children = d.children;
@@ -36,14 +38,18 @@ var Network = React.createClass({
                 d.children = null;
             }
         }
-        this.update(this.root)
+
+        // Get tree layout from hierarchy
+        var tree = d3.tree()
+            .size([this.props.width, this.props.height]);
+
+        this.nodes = tree(this.root).descendants();
     },
     componentWillReceiveProps (props){
         this.props = props;
-        this.prepData();
-
+        this.update();
     },
-    update(source) {
+    update() {
         // Link connector function
         var connector = function(d) {
             return "M" + d.x + "," + d.y
@@ -52,34 +58,32 @@ var Network = React.createClass({
                + " " + d.parent.x + "," + d.parent.y;
         };
 
-        var tree = d3.tree()
-                .size([this.props.width, this.props.height]);
-
-        // Compute the new tree layout.
-        var nodes = tree(this.root).descendants(),
+        // Filter nodes / links to current depth
+        var nodes = this.nodes.filter((d) => d.depth < this.props.data.depth),
             links = nodes.slice(1);
 
         // Normalize for fixed-depth.
-        nodes.forEach(function(d) { d.y = d.depth * 200; });
+        nodes.forEach(function(d) { d.y = d.depth * this.props.height / 4; }.bind(this));
 
         // Update the nodes…
         var node = this.g.selectAll("g.node")
                     .data(nodes, function(d) {return d.id});
 
-        // Enter any new nodes at the parent's previous position.
+        // Enter any new nodes at the parent's position.
         var nodeEnter = node.enter().append("g")
                           .attr("class", "node")
                           .attr("transform", function(d) {
                               var x = d.parent === null ? d.x0 : d.parent.x;
                               var y = d.parent === null ? d.y0 : d.parent.y;
-                              if(d.parent !== null) {console.log(d.parent.x, d.parent.y)}
                               return "translate(" + x + "," + y + ")";
                           })
 
+        // Append circle to node
         nodeEnter.append("circle")
             .attr("r", 1e-6)
             .style("fill", function(d) { return d._children ? "lightsteelblue" : "#d3d3d3"; });
 
+        // Append text to node
         nodeEnter.append("text")
               .attr("x", function(d) { return -20})
               .attr("dy", ".35em")
@@ -90,7 +94,7 @@ var Network = React.createClass({
         // Transition nodes to their new position.
         var nodeUpdate = node.merge(nodeEnter).transition()
               .duration(this.props.duration)
-              .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+              .attr("transform", function(d) {if(d.id == 'Data3'){console.log('data 3 x ', d.x)}; return "translate(" + d.x + "," + d.y + ")"; });
 
         nodeUpdate.select("circle")
               .attr("r", 14.5)
@@ -143,11 +147,6 @@ var Network = React.createClass({
               })
               .remove();
 
-        // Stash the old positions for transition.
-          nodes.forEach(function(d) {
-            d.x0 = d.x;
-            d.y0 = d.y;
-          });
     },
     render() {
         return(
