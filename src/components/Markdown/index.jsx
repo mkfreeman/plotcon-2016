@@ -1,6 +1,6 @@
 import React from 'react';
 import Highlight from 'react-highlight';
-import '../../../node_modules/highlight.js/styles/atelier-forest-light.css'
+import '../../../node_modules/highlight.js/styles/mono-blue.css'
 import './main.css';
 
 // Markdown

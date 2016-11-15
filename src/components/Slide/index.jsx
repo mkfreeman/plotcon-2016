@@ -22,9 +22,10 @@ var Slide = React.createClass({
     },
     componentDidMount() {
         window.onkeydown = function(e) {
+            console.log(e)
             var key = e.keyCode ? e.keyCode : e.which;
-            if(key == 39 | key == 32 | key == 13) this.handleKeyPress('forward');
-            else if(key == 37) this.handleKeyPress('backward');
+            if(key == 39 | key == 32 | key == 13 | e.code == "PageDown") this.handleKeyPress('forward');
+            else if(key == 37 | e.code == "PageUp") this.handleKeyPress('backward');
         }.bind(this);
     },
     render() {
@@ -40,7 +41,7 @@ var Slide = React.createClass({
                 var component = <Markdown text={this.props.markdown}></Markdown>
                 break;
             case 'site':
-                var component = <Site twitterLink={this.props.srcLink} url={this.props.iframe} width={window.innerWidth * .9} height={window.innerHeight - 60}/>
+                var component = <Site twitterLink={this.props.srcLink} url={this.props.iframe} width={window.innerWidth * .9} height={window.innerHeight - 80}/>
                 break;
             case 'image':
                 var component = <Image src={this.props.src} width={window.innerWidth * .9} height={window.innerHeight - 60}/>
