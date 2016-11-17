@@ -18,6 +18,7 @@ import Slide16 from './Slide16.js';
 import Slide17 from './Slide17.js';
 import Slide18 from './Slide18.js';
 import Slide19 from './Slide19.js';
+import Slide20 from './Slide20.js';
 
 var slideData = {};
 slideData.slide1 = Slide1;
@@ -33,12 +34,13 @@ slideData.slide10 = Slide11;
 slideData.slide11 = Slide18;
 slideData.slide12 = Slide17;
 slideData.slide13 = Slide19;
-slideData.slide14 = Slide10;
-slideData.slide15 = Slide13;
-slideData.slide16 = Slide14;
-slideData.slide17 = Slide15;
-slideData.slide18 = Slide16;
-slideData.slide19 = Slide12;
+slideData.slide14 = Slide20;
+slideData.slide15 = Slide10;
+slideData.slide16 = Slide13;
+slideData.slide17 = Slide14;
+slideData.slide18 = Slide15;
+slideData.slide19 = Slide16;
+slideData.slide20 = Slide12;
 
 
 
