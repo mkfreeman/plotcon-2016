@@ -10,7 +10,7 @@ filter.append('feGaussianBlur')\n\
 	.attr('stdDeviation','10')\n\
 	.attr('result','blur');\n\
 \n\
-// Append a color matrix to increase contrst (creating blob effect) \n\
+// Append a color matrix to increase contrast (creating blob effect) \n\
 filter.append('feColorMatrix')\n\
 	.attr('in','blur')\n\
 	.attr('mode','matrix')\n\

@@ -8,7 +8,6 @@ while(x < this.props.width){\n\
 	let y = yStart;\n\
 	let anchorX = x - xAnchorDiff;\n\
 	let anchorY = y + yAnchorDiff *  Math.pow(-1, iter);\n\
-	let anchorY2 = yStart2 + yAnchorDiff *  Math.pow(-1, iter);\n\
 	curve += ' Q ' + anchorX + ',' + anchorY + ' ' + x + ',' + y\n\
 }\n\
 \n\
